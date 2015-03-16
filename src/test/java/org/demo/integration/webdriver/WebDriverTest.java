@@ -50,7 +50,9 @@ public class WebDriverTest {
 	@Before
 	public void setup() {
 
-		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).alwaysDo(print()) // Optional
+		MockMvc mockMvc = MockMvcBuilders
+				.webAppContextSetup(context)
+				.alwaysDo(print()) // Optional
 				.build();
 
 		Capabilities capabilities = DesiredCapabilities.firefox();
