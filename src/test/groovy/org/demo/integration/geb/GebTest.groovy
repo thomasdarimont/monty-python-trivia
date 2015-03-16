@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 package org.demo.integration.geb
-
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
-import org.demo.integration.geb.pages.*
-
+import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController
+import com.gargoylesoftware.htmlunit.WebClient
 import geb.spock.GebReportingSpec
-
-import org.demo.Config
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.demo.Application
+import org.demo.integration.geb.pages.AnswerPage
+import org.demo.integration.geb.pages.QuestionPage
+import org.openqa.selenium.Capabilities
+import org.openqa.selenium.remote.DesiredCapabilities
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.web.WebAppConfiguration
@@ -32,25 +29,27 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.htmlunit.webdriver.MockMvcHtmlUnitDriver
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
-
-import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
-import com.gargoylesoftware.htmlunit.WebClient;
-
 import spock.lang.Stepwise
 
-@ContextConfiguration(classes = Config.class)
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
+
+@ContextConfiguration(classes = Application.class)
 @WebAppConfiguration
 @Stepwise
 class GebTest extends GebReportingSpec {
+
 	@Autowired
 	WebApplicationContext context
 
     def setup() {
+
         MockMvc mockMvc = MockMvcBuilders
             .webAppContextSetup(context)
             .alwaysDo(print())
             .build()
+
         Capabilities capabilities = DesiredCapabilities.firefox();
+
         browser.driver = new MockMvcHtmlUnitDriver(mockMvc, capabilities) {
             @Override
             protected WebClient configureWebClient(WebClient client) {

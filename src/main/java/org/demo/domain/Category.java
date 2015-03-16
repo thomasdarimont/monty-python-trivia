@@ -5,19 +5,16 @@ import javax.persistence.Id;
 
 @Entity
 public class Category {
-	
-	@Id
-	long id;
-	
-	String name;
 
+	@Id
+	private long id;
+
+	private String name;
 
 	public Category() {
-		super();
-	}	
-	
+	}
+
 	public Category(long id, String name) {
-		this();
 		this.id = id;
 		this.name = name;
 	}
@@ -37,8 +34,4 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	
-	
-	
 }

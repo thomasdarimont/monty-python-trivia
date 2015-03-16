@@ -1,11 +1,11 @@
 package org.demo.integration.mockmvc;
 
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.demo.Config;
+import org.demo.Application;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = Config.class)
+@ContextConfiguration(classes = Application.class)
 @WebAppConfiguration
 public class MockMvcTest {
 	
@@ -31,6 +31,7 @@ public class MockMvcTest {
 
 	@Before
 	public void setup() {
+
 		mockMvc = MockMvcBuilders
 				.webAppContextSetup(context)
 				.alwaysDo(print()) // Optional
@@ -39,6 +40,7 @@ public class MockMvcTest {
 
 	@Test
 	public void categoriesBasic() throws Exception {
+
 		mockMvc.perform(get("/categories"))
 			.andExpect(status().is2xxSuccessful())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
@@ -46,6 +48,7 @@ public class MockMvcTest {
 
 	@Test
 	public void categoriesJsonPath() throws Exception {
+
 		ResultMatcher containsMovies = jsonPath("$.[*].name[*]")
 			.value(contains(
 				"Holy Grail",
@@ -59,6 +62,7 @@ public class MockMvcTest {
 
 	@Test
 	public void formPost() throws Exception {
+
 		mockMvc.perform(post("/").param("question", "1"))
 			.andExpect(model().attributeExists("question"));
 	}

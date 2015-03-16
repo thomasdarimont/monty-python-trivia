@@ -13,19 +13,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class FormController {
 
-	@Autowired QuestionRepository repository;
-	
-	@RequestMapping(method=RequestMethod.GET)
+	private final QuestionRepository repository;
+
+	@Autowired
+	public FormController(QuestionRepository repository) {
+		this.repository = repository;
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
 	public String showForm() {
 		return "question";
 	}
-	
-	@RequestMapping(method=RequestMethod.POST)
+
+	@RequestMapping(method = RequestMethod.POST)
 	public String displayResults(@RequestParam("question") Long questionId, Model model) {
 
 		Question question = repository.findOne(questionId);
 		model.addAttribute("question", question);
-		
+
 		return "answer";
-	}	
+	}
 }

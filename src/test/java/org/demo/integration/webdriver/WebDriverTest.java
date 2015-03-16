@@ -16,9 +16,11 @@
 package org.demo.integration.webdriver;
 
 import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
-import org.demo.Config;
+import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
+import com.gargoylesoftware.htmlunit.WebClient;
+import org.demo.Application;
 import org.demo.integration.pages.AnswerPage;
 import org.demo.integration.pages.QuestionPage;
 import org.junit.Before;
@@ -36,26 +38,22 @@ import org.springframework.test.web.servlet.htmlunit.webdriver.MockMvcHtmlUnitDr
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
-import com.gargoylesoftware.htmlunit.WebClient;
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = Config.class)
+@ContextConfiguration(classes = Application.class)
 @WebAppConfiguration
 public class WebDriverTest {
-	@Autowired
-	WebApplicationContext context;
+
+	@Autowired WebApplicationContext context;
 
 	WebDriver driver;
 
 	@Before
 	public void setup() {
-		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context)
-				.alwaysDo(print()) // Optional
+
+		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).alwaysDo(print()) // Optional
 				.build();
 
-		Capabilities capabilities = DesiredCapabilities.firefox(); 
+		Capabilities capabilities = DesiredCapabilities.firefox();
 		driver = new MockMvcHtmlUnitDriver(mockMvc, capabilities) {
 			@Override
 			protected WebClient configureWebClient(WebClient client) {
@@ -69,15 +67,15 @@ public class WebDriverTest {
 	@Test
 	public void whatDoKnightsOfNiSay() throws Exception {
 		QuestionPage question = QuestionPage.to(driver);
-		
+
 		question.selectMovieOption("Holy Grail");
-		
+
 		question.selectQuestionOption("What do the Knights of Ni say?");
-		
+
 		question.submit();
-		
+
 		AnswerPage answer = AnswerPage.at(driver);
-		
+
 		assertTrue(answer.hasQuestion("What do the Knights of Ni say?"));
 		assertTrue(answer.hasAnswer("Ni!"));
 	}

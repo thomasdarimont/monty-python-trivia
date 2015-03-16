@@ -1,9 +1,8 @@
 package org.demo.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
-import org.demo.Config;
+import org.demo.Application;
 import org.demo.domain.Category;
 import org.demo.domain.Question;
 import org.demo.web.CategoryController;
@@ -15,25 +14,24 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=Config.class)
+@ContextConfiguration(classes = Application.class)
 @WebAppConfiguration
 public class BasicIntegrationTest {
 
 	@Autowired CategoryController controller;
-	
+
 	@Test
 	public void testCategories() {
 		Iterable<Category> iterable = controller.getCategories();
 		assertNotNull(iterable);
-		assertEquals( "Holy Grail", iterable.iterator().next().getName() ) ;
+		assertEquals("Holy Grail", iterable.iterator().next().getName());
 	}
 
-	
+
 	@Test
 	public void testQuestions() {
 		Iterable<Question> iterable = controller.getQuestionsForCategory(1);
 		assertNotNull(iterable);
-		assertEquals( "What do the Knights of Ni say?", iterable.iterator().next().getQuestion() ) ;
+		assertEquals("What do the Knights of Ni say?", iterable.iterator().next().getQuestion());
 	}
-
 }

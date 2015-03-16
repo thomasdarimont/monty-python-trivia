@@ -40,6 +40,7 @@ public class QuestionPage  {
      * Obtain and return the # of options in the 'movie' selection element.
      */
     public int getNumberOfMovieOptions() {
+
 		testElementBasics(movie);
 	    	Select select = new Select(movie);
 	    	return select.getOptions().size();
@@ -50,6 +51,7 @@ public class QuestionPage  {
      * See if the given option is present in the movie selection list, like "Holy Grail".
      */
     public boolean isMovieOptionPresent(String movieOption) {
+
 		testElementBasics(movie);
     		Select select = new Select(movie);
 		List<WebElement> options = select.getOptions();
@@ -87,6 +89,7 @@ public class QuestionPage  {
     }
     
     private void selectOption(WebElement webElement, String optionToSelect) {
+
 		testElementBasics(webElement);
     	Select select = new Select(webElement);
     	select.selectByVisibleText(optionToSelect); // Will get an exception if the option isn't found.

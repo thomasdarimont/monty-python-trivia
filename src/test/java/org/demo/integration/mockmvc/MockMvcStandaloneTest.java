@@ -25,8 +25,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MockMvcStandaloneTest {
+
 	@Mock
 	CategoryRepository categoryRepository;
+
 	@Mock
 	QuestionRepository questionRepository;
 
@@ -34,6 +36,7 @@ public class MockMvcStandaloneTest {
 
 	@Before
 	public void setup() {
+
 		mockMvc = MockMvcBuilders
 				.standaloneSetup(new CategoryController(categoryRepository,questionRepository))
 				.alwaysDo(print()) // Optional
@@ -44,6 +47,7 @@ public class MockMvcStandaloneTest {
 
 	@Test
 	public void categoriesBasic() throws Exception {
+
 		mockMvc.perform(get("/categories"))
 			.andExpect(status().is2xxSuccessful())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
@@ -51,6 +55,7 @@ public class MockMvcStandaloneTest {
 
 	@Test
 	public void categoriesJsonPath() throws Exception {
+
 		mockMvc.perform(get("/categories"))
 			.andExpect(jsonPath("$.[*].name[*]").value(contains("category 1","category 2")));
 	}

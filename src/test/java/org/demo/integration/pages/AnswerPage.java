@@ -23,9 +23,11 @@ public class AnswerPage {
      * If we are not presently on the AnswerPage, this will throw an Exception.
      */
     public static AnswerPage at(WebDriver driver) {
+
 		if (!isCurrentPage(driver)) {
 			throw new RuntimeException("Web Driver is not presently positioned on the Answer page.");
 		}
+
         return PageFactory.initElements(driver, AnswerPage.class);
     }	
 	

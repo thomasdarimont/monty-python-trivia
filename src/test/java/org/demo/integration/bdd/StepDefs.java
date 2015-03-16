@@ -1,18 +1,21 @@
 package org.demo.integration.bdd;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
-import org.demo.Config;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import org.demo.Application;
 import org.demo.integration.pages.AnswerPage;
 import org.demo.integration.pages.QuestionPage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,16 +25,9 @@ import org.springframework.test.web.servlet.htmlunit.webdriver.MockMvcHtmlUnitDr
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-
 
 @WebAppConfiguration
-@ContextConfiguration(classes = Config.class)
+@ContextConfiguration(classes = Application.class)
 public class StepDefs {
 	
 	@Autowired private WebApplicationContext context;
